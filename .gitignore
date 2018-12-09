@@ -1,6 +1,7 @@
 .gradle
 /build/
 .idea
+gps-tools-cli.iml
 
 # Ignore Gradle GUI config
 gradle-app.setting
