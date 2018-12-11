@@ -1,4 +1,4 @@
-package pl.mskruch
+package pl.mskruch.gpstools
 
 import kotlin.Exception
 

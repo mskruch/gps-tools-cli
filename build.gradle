@@ -33,4 +33,4 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-    mainClassName = "AppKt"
+    mainClassName = "MainKt"

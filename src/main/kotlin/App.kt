@@ -1,6 +1,6 @@
 import gpstools.cmd.*
 import org.apache.commons.cli.*
-import pl.mskruch.ParserFailure
+import pl.mskruch.gpstools.ParserFailure
 
 val options = prepareOptions()
 val engine = Engine()
