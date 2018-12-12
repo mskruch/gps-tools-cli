@@ -1,5 +1,6 @@
 package pl.mskruch.gpstools
 
+import org.apache.commons.cli.CommandLine
 import org.apache.commons.cli.DefaultParser
 import org.apache.commons.cli.HelpFormatter
 import org.apache.commons.cli.Options
@@ -24,21 +25,31 @@ class Application {
 
     fun execute(args: Array<String>) {
         val line = DefaultParser().parse(options, args)
+
+        includeArguments(line)
+        includeOptions(line)
+        includeSummary()
+
+        execution.run()
+    }
+
+    private fun includeArguments(line: CommandLine) {
         if (line.args.isEmpty()) {
             throw InvalidOptions("No file specified.")
         }
-
         line.args.forEach {
             execution.inputs.add(FileInput(it))
         }
+    }
 
+    private fun includeOptions(line: CommandLine) {
         line.options.forEach {
             cliOptionsMap[it.opt]?.apply(execution);
         }
+    }
 
+    private fun includeSummary() {
         execution.outputs.add(Summary())
-
-        execution.run()
     }
 
     fun showUsage() {
