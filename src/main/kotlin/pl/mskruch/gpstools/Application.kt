@@ -4,23 +4,23 @@ import org.apache.commons.cli.CommandLine
 import org.apache.commons.cli.DefaultParser
 import org.apache.commons.cli.HelpFormatter
 import org.apache.commons.cli.Options
-import pl.mskruch.gpstools.options.CliOption
+import pl.mskruch.gpstools.options.OptionDefinition
 import pl.mskruch.gpstools.options.Verbose
-import pl.mskruch.gpstools.workers.FileInput
-import pl.mskruch.gpstools.workers.Summary
+import pl.mskruch.gpstools.processors.FileInput
+import pl.mskruch.gpstools.processors.Summary
 
 class Application {
-    private val cliOptionsMap: Map<String, CliOption>
+    private val optionDefinitionsMap: Map<String, OptionDefinition>
     private val options = Options()
     private val execution = Execution()
 
     constructor() {
-        val cliOptions = listOf<CliOption>(
+        val optionDefinitions = listOf<OptionDefinition>(
             Verbose()
         )
 
-        cliOptionsMap = cliOptions.map { it.option.opt to it }.toMap()
-        cliOptions.forEach { options.addOption(it.option) }
+        optionDefinitionsMap = optionDefinitions.map { it.option.opt to it }.toMap()
+        optionDefinitions.forEach { options.addOption(it.option) }
     }
 
     fun execute(args: Array<String>) {
@@ -44,7 +44,7 @@ class Application {
 
     private fun includeOptions(line: CommandLine) {
         line.options.forEach {
-            cliOptionsMap[it.opt]?.apply(execution);
+            optionDefinitionsMap[it.opt]?.apply(execution);
         }
     }
 

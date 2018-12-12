@@ -2,9 +2,9 @@ package pl.mskruch.gpstools
 
 import gpstools.Waypoint
 import gpstools.track.Track
-import pl.mskruch.gpstools.workers.Input
-import pl.mskruch.gpstools.workers.Output
-import pl.mskruch.gpstools.workers.Processor
+import pl.mskruch.gpstools.processors.Input
+import pl.mskruch.gpstools.processors.Output
+import pl.mskruch.gpstools.processors.Processor
 
 class Execution() {
     internal var track = Track()
