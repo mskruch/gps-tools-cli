@@ -4,8 +4,9 @@ import org.apache.commons.cli.CommandLine
 import org.apache.commons.cli.DefaultParser
 import org.apache.commons.cli.HelpFormatter
 import org.apache.commons.cli.Options
+import pl.mskruch.gpstools.options.ChangeNameOption
 import pl.mskruch.gpstools.options.OptionDefinition
-import pl.mskruch.gpstools.options.Verbose
+import pl.mskruch.gpstools.options.VerboseOption
 import pl.mskruch.gpstools.processors.FileInput
 import pl.mskruch.gpstools.processors.Summary
 
@@ -16,7 +17,7 @@ class Application {
 
     constructor() {
         val optionDefinitions = listOf<OptionDefinition>(
-            Verbose()
+            VerboseOption(), ChangeNameOption()
         )
 
         optionDefinitionsMap = optionDefinitions.map { it.option.opt to it }.toMap()
@@ -44,7 +45,7 @@ class Application {
 
     private fun includeOptions(line: CommandLine) {
         line.options.forEach {
-            optionDefinitionsMap[it.opt]?.apply(execution);
+            optionDefinitionsMap[it.opt]?.apply(execution, it);
         }
     }
 
