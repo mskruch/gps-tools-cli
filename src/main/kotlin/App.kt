@@ -5,6 +5,7 @@ import pl.mskruch.gpstools.ParserFailure
 val options = prepareOptions()
 val engine = Engine()
 
+@Deprecated("to be removed once ported")
 fun main(args: Array<String>) {
     try {
         run(args)
@@ -25,8 +26,6 @@ private fun run(args: Array<String>) {
         for (argument in line.args) {
             engine.add(ReadFileJob(argument))
         }
-
-        engine.add(SummaryJob(line.hasOption("summary")))
 
         for (option in line.options) {
             when {
@@ -96,7 +95,6 @@ private fun prepareOptions(): Options {
     options.addOption("out", true, "specify output file")
     options.addOption("name", true, "change the track name")
     options.addOption("rbd", true, "reduce points by distance")
-    options.addOption("summary", false, "verbose summary")
     options.addOption("onelap", false, "merge all the laps into one")
     options.addOption("sort", false, "sort laps by time")
     options.addOption(
