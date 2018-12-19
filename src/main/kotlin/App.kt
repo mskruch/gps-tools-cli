@@ -29,7 +29,6 @@ private fun run(args: Array<String>) {
 
         for (option in line.options) {
             when {
-                "out" == option.opt -> engine.add(WriteFileJob(option.value))
                 "gpx" == option.opt -> engine.format = "gpx"
                 "tcx" == option.opt -> engine.format = "tcx"
                 "lap" == option.opt -> {
@@ -88,7 +87,6 @@ private fun prepareOptions(): Options {
     )
     options.addOption("tcx", false, "saves as tcx file")
     options.addOption("gpx", false, "saves as gpx file")
-    options.addOption("out", true, "specify output file")
     options.addOption("rbd", true, "reduce points by distance")
     options.addOption("onelap", false, "merge all the laps into one")
     options.addOption("sort", false, "sort laps by time")

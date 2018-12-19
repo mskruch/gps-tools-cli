@@ -6,8 +6,7 @@ import pl.mskruch.gpstools.Execution
 import pl.mskruch.gpstools.ExecutionFailure
 import java.io.IOException
 
-class FileInput(fileName: String) : Input {
-    private val fileName = fileName
+class FileInput(private val fileName: String) : Input {
 
     override fun process(execution: Execution) {
         try {

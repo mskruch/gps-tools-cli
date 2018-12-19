@@ -5,6 +5,7 @@ import org.apache.commons.cli.DefaultParser
 import org.apache.commons.cli.HelpFormatter
 import org.apache.commons.cli.Options
 import pl.mskruch.gpstools.options.ChangeNameOption
+import pl.mskruch.gpstools.options.FileOutputOption
 import pl.mskruch.gpstools.options.OptionDefinition
 import pl.mskruch.gpstools.options.VerboseOption
 import pl.mskruch.gpstools.processors.FileInput
@@ -16,11 +17,12 @@ class Application {
     private val execution = Execution()
 
     constructor() {
-        val optionDefinitions = listOf<OptionDefinition>(
-            VerboseOption(), ChangeNameOption()
+        val optionDefinitions = listOf(
+            VerboseOption(), ChangeNameOption(), FileOutputOption()
         )
 
-        optionDefinitionsMap = optionDefinitions.map { it.option.opt to it }.toMap()
+        optionDefinitionsMap =
+                optionDefinitions.map { it.option.opt to it }.toMap()
         optionDefinitions.forEach { options.addOption(it.option) }
     }
 
