@@ -20,7 +20,7 @@ class Application {
                 execution.processors.add(ChangeName(it.value))
             },
             OptionProcessor(Option("o", "out", true, "specify output file")) {
-                execution.processors.add(FileOutput(it.value))
+                execution.outputs.add(FileOutput(it.value))
             },
             OptionProcessor(Option("v", "verbose", false, "verbose summary")) {
                 execution.verbose = true

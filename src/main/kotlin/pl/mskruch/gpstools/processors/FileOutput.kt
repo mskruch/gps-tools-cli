@@ -12,7 +12,7 @@ import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 
-class FileOutput(private val fileName: String) : Input {
+class FileOutput(private val fileName: String) : Output {
     override fun process(execution: Execution) {
         val exporter = when (execution.format) {
             "gpx" -> GpxExporter()
