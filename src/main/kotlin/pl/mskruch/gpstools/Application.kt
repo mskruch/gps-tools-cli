@@ -1,29 +1,33 @@
 package pl.mskruch.gpstools
 
-import org.apache.commons.cli.CommandLine
-import org.apache.commons.cli.DefaultParser
-import org.apache.commons.cli.HelpFormatter
-import org.apache.commons.cli.Options
-import pl.mskruch.gpstools.options.ChangeNameOption
-import pl.mskruch.gpstools.options.FileOutputOption
-import pl.mskruch.gpstools.options.OptionDefinition
-import pl.mskruch.gpstools.options.VerboseOption
+import org.apache.commons.cli.*
+import pl.mskruch.gpstools.processors.ChangeName
 import pl.mskruch.gpstools.processors.FileInput
+import pl.mskruch.gpstools.processors.FileOutput
 import pl.mskruch.gpstools.processors.Summary
 
+class OptionProcessor(val option: Option, val process: (Option) -> Unit)
+
 class Application {
-    private val optionDefinitionsMap: Map<String, OptionDefinition>
-    private val options = Options()
     private val execution = Execution()
 
-    constructor() {
-        val optionDefinitions = listOf(
-            VerboseOption(), ChangeNameOption(), FileOutputOption()
-        )
+    private val options = Options()
+    private val optionsMapping: Map<String, OptionProcessor>
 
-        optionDefinitionsMap =
-                optionDefinitions.map { it.option.opt to it }.toMap()
-        optionDefinitions.forEach { options.addOption(it.option) }
+    constructor() {
+        val list = listOf(
+            OptionProcessor(Option("n", "name", true, "set the track name")) {
+                execution.processors.add(ChangeName(it.value))
+            },
+            OptionProcessor(Option("o", "out", true, "specify output file")) {
+                execution.processors.add(FileOutput(it.value))
+            },
+            OptionProcessor(Option("v", "verbose", false, "verbose summary")) {
+                execution.verbose = true
+            }
+        )
+        optionsMapping = list.map { it.option.opt to it }.toMap()
+        list.forEach { options.addOption(it.option) }
     }
 
     fun execute(args: Array<String>) {
@@ -47,7 +51,7 @@ class Application {
 
     private fun includeOptions(line: CommandLine) {
         line.options.forEach {
-            optionDefinitionsMap[it.opt]?.apply(execution, it);
+            optionsMapping[it.opt]?.process?.invoke(it)
         }
     }
 
