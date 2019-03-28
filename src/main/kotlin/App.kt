@@ -36,11 +36,6 @@ private fun run(args: Array<String>) {
                     val index = Integer.valueOf(value) - 1
                     engine.add(RetainLapJob(index))
                 }
-                "rbd" == option.opt -> {
-                    val value = option.value
-                    val distanceInMeters = Integer.valueOf(value)
-                    engine.add(ReduceByDistanceJob(distanceInMeters))
-                }
                 "onelap" == option.opt -> engine.add(OneLapJob())
                 "sort" == option.opt -> engine.add(SortLapsJob())
                 "daytag" == option.opt -> engine.add(DayTagJob())
@@ -87,7 +82,6 @@ private fun prepareOptions(): Options {
     )
     options.addOption("tcx", false, "saves as tcx file")
     options.addOption("gpx", false, "saves as gpx file")
-    options.addOption("rbd", true, "reduce points by distance")
     options.addOption("onelap", false, "merge all the laps into one")
     options.addOption("sort", false, "sort laps by time")
     options.addOption(

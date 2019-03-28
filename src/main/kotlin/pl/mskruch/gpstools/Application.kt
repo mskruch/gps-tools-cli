@@ -1,10 +1,7 @@
 package pl.mskruch.gpstools
 
 import org.apache.commons.cli.*
-import pl.mskruch.gpstools.processors.ChangeName
-import pl.mskruch.gpstools.processors.FileInput
-import pl.mskruch.gpstools.processors.FileOutput
-import pl.mskruch.gpstools.processors.Summary
+import pl.mskruch.gpstools.processors.*
 
 class OptionProcessor(val option: Option, val process: (Option) -> Unit)
 
@@ -24,6 +21,9 @@ class Application {
             },
             OptionProcessor(Option("v", "verbose", false, "verbose summary")) {
                 execution.verbose = true
+            },
+            OptionProcessor(Option("rbd", "reduce-by-distance", true, "reduce points by distance in meters")) {
+                execution.processors.add(ReduceByDistance(it.value.toInt()))
             }
         )
         optionsMapping = list.map { it.option.opt to it }.toMap()
