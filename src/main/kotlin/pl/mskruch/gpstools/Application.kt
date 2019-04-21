@@ -24,6 +24,13 @@ class Application {
             },
             OptionProcessor(Option("rbd", "reduce-by-distance", true, "reduce points by distance in meters")) {
                 execution.processors.add(ReduceByDistance(it.value.toInt()))
+            },
+            OptionProcessor(
+                Option.builder("r").longOpt("reduce").hasArg().desc(
+                    "reduce points using douglas-peucker algorithm"
+                ).optionalArg(true).argName("epsilon").build()
+            ) {
+                execution.processors.add(if (it.value != null) Reduce(it.value.toDouble()) else Reduce())
             }
         )
         optionsMapping = list.map { it.option.opt to it }.toMap()

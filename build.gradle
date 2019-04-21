@@ -23,6 +23,8 @@ dependencies {
 
     compile "commons-cli:commons-cli:1.4"
 
+    compile files ('lib/fit.jar')
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
