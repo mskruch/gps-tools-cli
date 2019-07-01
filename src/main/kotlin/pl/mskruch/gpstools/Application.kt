@@ -5,19 +5,22 @@ import pl.mskruch.gpstools.processors.*
 
 class OptionProcessor(val option: Option, val process: (Option) -> Unit)
 
-class Application {
+class Application() {
     private val execution = Execution()
 
     private val options = Options()
     private val optionsMapping: Map<String, OptionProcessor>
 
-    constructor() {
+    init {
         val list = listOf(
             OptionProcessor(Option("n", "name", true, "set the track name")) {
                 execution.processors.add(ChangeName(it.value))
             },
             OptionProcessor(Option("o", "out", true, "specify output file")) {
                 execution.outputs.add(FileOutput(it.value))
+            },
+            OptionProcessor(Option("s", "start", true, "specify the starting point")) {
+                execution.processors.add(ChangeStart(it.value))
             },
             OptionProcessor(Option("v", "verbose", false, "verbose summary")) {
                 execution.verbose = true
