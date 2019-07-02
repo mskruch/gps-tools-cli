@@ -22,6 +22,9 @@ class Application() {
             OptionProcessor(Option("s", "start", true, "specify the starting point")) {
                 execution.processors.add(ChangeStart(it.value))
             },
+            OptionProcessor(Option("p", "patch", true, "patch file")) {
+                execution.processors.add(Patch(it.value))
+            },
             OptionProcessor(Option("v", "verbose", false, "verbose summary")) {
                 execution.verbose = true
             },

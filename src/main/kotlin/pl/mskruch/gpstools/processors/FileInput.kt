@@ -9,22 +9,19 @@ import java.io.IOException
 class FileInput(private val fileName: String) : Input {
 
     override fun process(execution: Execution) {
+        execution.track.add(readTrack())
+    }
+
+    fun readTrack(): Track {
         try {
             print("Reading $fileName... ")
-            readFile(execution)
-            print("done.")
-            return
+            return Track.from(fileName)
         } catch (e: UnsupportedFormat) {
             throw ExecutionFailure("Unsupported file format: $fileName")
         } catch (e: IOException) {
             throw ExecutionFailure("Unable to read the file: $fileName")
         } finally {
-            println()
+            println("done.")
         }
-    }
-
-    private fun readFile(execution: Execution) {
-        val read = Track.from(fileName)
-        execution.track.add(read)
     }
 }
